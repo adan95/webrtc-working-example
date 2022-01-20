@@ -1,22 +1,22 @@
-// const SIGNALING_SERVER_URL = "http://34.132.73.12:9999";
-const SIGNALING_SERVER_URL = "http://localhost:9999";
-const TURN_SERVER_URL = "localhost:3478";
+const SIGNALING_SERVER_URL = "34.132.73.12:9999";
+// const SIGNALING_SERVER_URL = "http://localhost:9999";
+const TURN_SERVER_URL = "34.132.73.12:3478";
 const TURN_SERVER_USERNAME = "username";
 const TURN_SERVER_CREDENTIAL = "credential";
 
 const PC_CONFIG = {
-  // iceServers: [
-  //   {
-  //     urls: "turn:" + TURN_SERVER_URL + "?transport=tcp",
-  //     username: TURN_SERVER_USERNAME,
-  //     credential: TURN_SERVER_CREDENTIAL,
-  //   },
-  //   {
-  //     urls: "turn:" + TURN_SERVER_URL + "?transport=udp",
-  //     username: TURN_SERVER_USERNAME,
-  //     credential: TURN_SERVER_CREDENTIAL,
-  //   },
-  // ],
+  iceServers: [
+    {
+      urls: "turn:" + TURN_SERVER_URL + "?transport=tcp",
+      username: TURN_SERVER_USERNAME,
+      credential: TURN_SERVER_CREDENTIAL,
+    },
+    {
+      urls: "turn:" + TURN_SERVER_URL + "?transport=udp",
+      username: TURN_SERVER_USERNAME,
+      credential: TURN_SERVER_CREDENTIAL,
+    },
+  ],
 };
 
 // Signaling methods.
