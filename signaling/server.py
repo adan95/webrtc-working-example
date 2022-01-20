@@ -1,7 +1,7 @@
 from aiohttp import web
 import socketio
 
-ROOM = 'room'
+ROOM = 'room'  # This is the session name. :)
 
 sio = socketio.AsyncServer(cors_allowed_origins='*', ping_timeout=35)
 app = web.Application()
