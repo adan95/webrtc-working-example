@@ -5,6 +5,7 @@ const TURN_SERVER_USERNAME = "username";
 const TURN_SERVER_CREDENTIAL = "credential";
 
 const PC_CONFIG = {
+  //Interactive Connectivity Establishment (ICE).
   iceServers: [
     {
       urls: "turn:" + TURN_SERVER_URL + "?transport=tcp",
@@ -20,7 +21,7 @@ const PC_CONFIG = {
 };
 
 // Signaling methods.
-let socket = io(SIGNALING_SERVER_URL, { autoConnect: false });
+let socket = io(SIGNALING_SERVER_URL, { autoConnect: true });
 
 socket.on("data", (data) => {
   console.log("Data received: ", data);
@@ -29,8 +30,8 @@ socket.on("data", (data) => {
 
 socket.on("ready", () => {
   console.log("Ready");
-  // Connection with signaling server is ready, and so is local stream.
-  createPeerConnection();
+  // Connection signaling server is ready, and so we create the bridge with the peers.
+  createPeerConnection(); // Connect to peers.
   sendOffer();
 });
 
@@ -85,19 +86,20 @@ let getGPT3Stream = () => {
     body: objectToAPI,
   };
   console.log("Request to Server:\n", request);
+  socket.emit("client_call", request);
 
   // Send the request to the server.
-  fetch("http://34.132.73.12:3134/api/e", request)
-    .then((response) => response.json())
-    .then((url) => {
-      console.log("Video Generated at:\n", url);
+  // fetch("http://34.132.73.12:3134/api/e", request)
+  //   .then((response) => response.json())
+  //   .then((url) => {
+  //     console.log("Video Generated at:\n", url);
 
-      // We play the video on Screen.
-      remoteStreamElement.src = url;
-      stop = Date.now();
-      console.log("\nAPI Resolved at ", stop);
-      console.log(`\nTime Taken to execute = ${(stop - start) / 1000} seconds`);
-    });
+  //     // We play the video on Screen.
+  //     remoteStreamElement.src = url;
+  //     stop = Date.now();
+  //     console.log("\nAPI Resolved at ", stop);
+  //     console.log(`\nTime Taken to execute = ${(stop - start) / 1000} seconds`);
+  //   });
 };
 
 // Main function of the script.
@@ -123,24 +125,6 @@ let getLocalStream = () => {
     document.body.appendChild(callAPI);
   };
 };
-
-// Original Main function of the script.
-/*
-let getLocalStream = () => {
-  // Make use of the browser's media capabilities to get a local stream.
-  navigator.mediaDevices
-    .getUserMedia({ audio: true, video: true })
-    .then((stream) => {
-      console.log("Stream found");
-      localStream = stream;
-      // Connect after making sure that local stream is available.
-      socket.connect();
-    })
-    .catch((error) => {
-      console.error("Stream not found: ", error);
-    });
-};
-*/
 
 let createPeerConnection = () => {
   try {
