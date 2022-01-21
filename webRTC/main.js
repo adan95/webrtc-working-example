@@ -95,8 +95,8 @@ let getGPT3Stream = () => {
       // We play the video on Screen.
       remoteStreamElement.src = url;
       stop = Date.now();
-      console.log("API Resolved at ", stop);
-      console.log(`Time Taken to execute = ${(stop - start) / 1000} seconds`);
+      console.log("\nAPI Resolved at ", stop);
+      console.log(`\nTime Taken to execute = ${(stop - start) / 1000} seconds`);
     });
 };
 
@@ -104,7 +104,7 @@ let getGPT3Stream = () => {
 let getLocalStream = () => {
   window.onload = () => {
     socket.connect();
-    console.log("RTC Connection is down. D:");
+    console.log("RTC Connection is up. :D");
 
     // Button on screen.
     var callAPI = document.createElement("Button");
