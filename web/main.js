@@ -47,6 +47,39 @@ let remoteStreamElement = document.querySelector("#remoteStream");
 // GPT-3 methods.
 let start, stop; // Start and stop time of the API call.
 
+const GPT3_API_KEY = "";
+
+const openaiHeader = {
+  "Content-Type": "application/json",
+  Authorization: "Bearer " + GPT3_API_KEY,
+};
+
+async function conversation_response(query) {
+  // const query_prompt = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: " + query +" \nAI: ";
+  const response = await fetch(
+    "https://api.openai.com/v1/engines/davinci/completions",
+    {
+      headers: openaiHeader,
+      method: "POST",
+      body: JSON.stringify({
+        prompt: query,
+        temperature: 0.8,
+        max_tokens: 300,
+        top_p: 1,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.6,
+        stop: ["\n", " Human:", " Professor:"],
+      }),
+    }
+  );
+
+  const data = (await response.json()).choices[0].text;
+
+  console.log("Response from Server:\n", data);
+
+  return data;
+}
+
 const toBase64 = (str) => {
   return btoa(str);
 };
@@ -75,8 +108,9 @@ const objectToJSON = (query) => {
 };
 
 // Stablish connection with GPT-3.
-let getGPT3Stream = (query) => {
-  const object = objectToJSON(query);
+async function getGPT3Stream(query) {
+  const gpt3_query = await conversation_response(query);
+  const object = objectToJSON(gpt3_query);
   const objectToAPI = mapDataToAPI(object);
 
   const request = {
@@ -98,7 +132,7 @@ let getGPT3Stream = (query) => {
       console.log("API Resolved at ", stop);
       console.log(`Time Taken to execute = ${(stop - start) / 1000} seconds`);
     });
-};
+}
 
 // Main function of the script.
 let getLocalStream = () => {
@@ -117,6 +151,7 @@ let getLocalStream = () => {
     callAPI.style.position = "absolute";
     callAPI.style.marginLeft = "70px";
     callAPI.style.bottom = "10px";
+    callAPI.style.left = "45%";
 
     callAPI.onclick = () => {
       start = Date.now();
