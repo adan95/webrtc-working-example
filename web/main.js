@@ -90,7 +90,6 @@ let getGPT3Stream = (query) => {
   fetch("http://34.123.227.30:3134/api/e", request)
     .then((response) => response.json())
     .then((url) => {
-      alert(response.json());
       console.log("Video Generated at:\n", url);
 
       // We play the video on Screen.
@@ -112,6 +111,7 @@ let getLocalStream = () => {
 
     textarea.style.position = "absolute";
     textarea.style.bottom = "30px";
+    textarea.style.left = "45%";
 
     callAPI.innerHTML = "Send API Call";
     callAPI.style.position = "absolute";

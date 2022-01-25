@@ -2,11 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>REST method</title>
+    <title>Minimal App</title>
+    <style>
+        .content {
+            margin: auto;
+        }
+        .color-border textarea {
+            border: 2px solid #FFFFFF;
+        }
+        .color-border .form-control:focus {
+            border: 2px solid #68c8;
+            box-shadow: 0 0 0 0.5rem rgba(57, 68, 218, 0.25);
+        }
+        #remoteStream {
+            position: absolute;
+            align-content: center;
+            min-width: 50%;
+            min-height: 50%;
+        }
+        #currentPhoto {
+            position: absolute;
+            align-content: center;
+            min-width: 50%;
+            min-height: 90%;
+        }
+        body {
+            background-color: #181818;
+            height: 100px;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
+    <img id="currentPhoto" src="background.png" alt="" width="100" height="120">
     <video id="remoteStream" autoplay playsinline></video>
-    <textarea name="text" id="text" cols="30" rows="10" id="textarea"></textarea>
+    <!-- <textarea name="text" id="text" cols="30" rows="10" id="textarea"></textarea> -->
+    <div class="form-group color-border">
+        <textarea name="text" class="form-control" id="text" cols="30" rows="1"></textarea>
+      </div>
     <script src="socket.io.js"></script>
     <script src="main.js"></script>
 </body>
