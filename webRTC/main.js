@@ -89,7 +89,7 @@ let getGPT3Stream = () => {
   socket.emit("client_call", request);
 
   // Send the request to the server.
-  // fetch("http://34.132.73.12:3134/api/e", request)
+  // fetch("http://34.123.227.30:3134/api/e", request)
   //   .then((response) => response.json())
   //   .then((url) => {
   //     console.log("Video Generated at:\n", url);
