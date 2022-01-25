@@ -56,13 +56,18 @@ const openaiHeader = {
 
 async function conversation_response(query) {
   // const query_prompt = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: " + query +" \nAI: ";
+  const scenerio_query =
+    "The following is a conversation between a Professor and a student named Adan about machine learning only. The professor is helpful, creative, clever, and very friendly to Adan. \n\nHuman: Hello, who are you?\nProfessor: Hello, Adan. I am a Professor at your service. How can I help you today? ";
+  const initial_query = "\nHuman: " + query;
+  let clean_query = scenerio_query + initial_query + ".\nProfessor:";
+
   const response = await fetch(
     "https://api.openai.com/v1/engines/davinci/completions",
     {
       headers: openaiHeader,
       method: "POST",
       body: JSON.stringify({
-        prompt: query,
+        prompt: clean_query,
         temperature: 0.8,
         max_tokens: 300,
         top_p: 1,
