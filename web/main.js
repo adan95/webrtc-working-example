@@ -62,21 +62,21 @@ const mapDataToAPI = (data) => {
   return data;
 };
 
-const objectToJSON = () => {
-  message =
+const objectToJSON = (query) => {
+  mock_message =
     "I am doing very well thanks for asking. Today we will be talking about machine learning and other related subjects in artificial intelligence.";
 
-  console.log("Message sent:\n", message);
+  console.log("Message sent:\n", query);
 
   return {
     name: "video_".concat(Date.now().toString()),
-    text: message,
+    text: query,
   };
 };
 
 // Stablish connection with GPT-3.
-let getGPT3Stream = () => {
-  const object = objectToJSON();
+let getGPT3Stream = (query) => {
+  const object = objectToJSON(query);
   const objectToAPI = mapDataToAPI(object);
 
   const request = {
@@ -90,6 +90,7 @@ let getGPT3Stream = () => {
   fetch("http://34.123.227.30:3134/api/e", request)
     .then((response) => response.json())
     .then((url) => {
+      alert(response.json());
       console.log("Video Generated at:\n", url);
 
       // We play the video on Screen.
@@ -104,20 +105,25 @@ let getGPT3Stream = () => {
 let getLocalStream = () => {
   window.onload = () => {
     socket.connect();
-    console.log("RTC Connection is down. D:");
 
     // Button on screen.
+    var textarea = document.getElementById("text");
     var callAPI = document.createElement("Button");
+
+    textarea.style.position = "absolute";
+    textarea.style.bottom = "30px";
 
     callAPI.innerHTML = "Send API Call";
     callAPI.style.position = "absolute";
+    callAPI.style.marginLeft = "70px";
     callAPI.style.bottom = "10px";
 
     callAPI.onclick = () => {
       start = Date.now();
+      message = textarea.value;
 
       console.log("API Called at ", start);
-      getGPT3Stream();
+      getGPT3Stream(message);
     };
 
     document.body.appendChild(callAPI);
