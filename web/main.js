@@ -156,7 +156,7 @@ let getLocalStream = () => {
     callAPI.style.position = "absolute";
     callAPI.style.marginLeft = "70px";
     callAPI.style.bottom = "10px";
-    callAPI.style.left = "45%";
+    callAPI.style.left = "42%";
 
     callAPI.onclick = () => {
       start = Date.now();
