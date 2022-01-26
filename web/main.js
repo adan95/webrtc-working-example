@@ -126,7 +126,8 @@ async function getGPT3Stream(query) {
   console.log("Request to Server:\n", request);
 
   // Send the request to the server.
-  fetch("http://34.123.227.30:3134/api/e", request)
+  // http://34.123.227.30:3134/api/e
+  fetch("http://127.0.0.1:8000/api/e", request)
     .then((response) => response.json())
     .then((url) => {
       console.log("Video Generated at:\n", url);
