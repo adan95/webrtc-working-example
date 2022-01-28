@@ -47,6 +47,7 @@ let remoteStreamElement = document.querySelector("#remoteStream");
 // GPT-3 methods.
 let start, stop; // Start and stop time of the API call.
 
+const API = "http://34.123.227.30:3134";
 const GPT3_API_KEY = "";
 
 const openaiHeader = {
@@ -125,17 +126,33 @@ async function getGPT3Stream(query) {
   };
   console.log("Request to Server:\n", request);
 
-  // Send the request to the server.
-  fetch("http://34.123.227.30:3134/api/e", request)
-    .then((response) => response.json())
-    .then((url) => {
-      console.log("Video Generated at:\n", url);
+  // Send the request to the server 3134 || 3135 for a faster model.
+  // fetch("http://34.123.227.30:3135/api/e", request)
+  //   .then((response) => response.json())
+  //   .then((url) => {
+  //     console.log("Video Generated at:\n", url);
 
+  //     // We play the video on Screen.
+  //     remoteStreamElement.src = url;
+  //     stop = Date.now();
+  //     console.log("API Resolved at ", stop);
+  //     console.log(`Time Taken to execute = ${(stop - start) / 1000} seconds`);
+  //   });
+
+  fetch(API + "/api/e", request)
+    .then((response) => response.json())
+    .then((path) => {
       // We play the video on Screen.
-      remoteStreamElement.src = url;
+      console.warn("Video Generated and called at:\n", path);
+      remoteStreamElement.src = API + "/video";
+
       stop = Date.now();
+
       console.log("API Resolved at ", stop);
       console.log(`Time Taken to execute = ${(stop - start) / 1000} seconds`);
+    })
+    .catch((error) => {
+      console.error(error);
     });
 }
 
@@ -152,11 +169,11 @@ let getLocalStream = () => {
     textarea.style.bottom = "30px";
     textarea.style.left = "45%";
 
-    callAPI.innerHTML = "Send API Call";
+    callAPI.innerHTML = "Send";
     callAPI.style.position = "absolute";
     callAPI.style.marginLeft = "70px";
     callAPI.style.bottom = "10px";
-    callAPI.style.left = "42%";
+    callAPI.style.left = "43%";
 
     callAPI.onclick = () => {
       start = Date.now();
