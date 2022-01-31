@@ -56,11 +56,13 @@ const openaiHeader = {
 };
 
 async function conversation_response(query) {
-  // const query_prompt = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: " + query +" \nAI: ";
   const scenerio_query =
     "The following is a conversation between a Professor and a student named Adan about machine learning only. The professor is helpful, creative, clever, and very friendly to Adan. \n\nHuman: Hello, who are you?\nProfessor: Hello, Adan. I am a Professor at your service. How can I help you today? ";
   const initial_query = "\nHuman: " + query;
   let clean_query = scenerio_query + initial_query + ".\nProfessor:";
+
+  startGPT3 = Date.now();
+  console.log("GPT-3 Called at ", startGPT3);
 
   const response = await fetch(
     "https://api.openai.com/v1/engines/davinci/completions",
@@ -81,6 +83,7 @@ async function conversation_response(query) {
 
   const data = (await response.json()).choices[0].text;
 
+  console.log(`Time Taken by GPT-3 ${(Date.now() - startGPT3) / 1000} seconds`);
   console.log("Response from Server:\n", data);
 
   return data;
@@ -124,20 +127,8 @@ async function getGPT3Stream(query) {
     headers: { "Content-Type": "text/plain" },
     body: objectToAPI,
   };
+
   console.log("Request to Server:\n", request);
-
-  // Send the request to the server 3134 || 3135 for a faster model.
-  // fetch("http://34.123.227.30:3135/api/e", request)
-  //   .then((response) => response.json())
-  //   .then((url) => {
-  //     console.log("Video Generated at:\n", url);
-
-  //     // We play the video on Screen.
-  //     remoteStreamElement.src = url;
-  //     stop = Date.now();
-  //     console.log("API Resolved at ", stop);
-  //     console.log(`Time Taken to execute = ${(stop - start) / 1000} seconds`);
-  //   });
 
   fetch(API + "/api/e", request)
     .then((response) => response.json())
