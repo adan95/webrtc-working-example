@@ -47,7 +47,7 @@ let remoteStreamElement = document.querySelector("#remoteStream");
 // GPT-3 methods.
 let start, stop; // Start and stop time of the API call.
 
-const API = "http://34.123.227.30:3134";
+const API = "http://35.247.45.249:3134";
 const GPT3_API_KEY = "";
 
 const openaiHeader = {
